@@ -1,0 +1,13 @@
+/* dark.css: import Darkly theme then override for true black background */
+@import url('https://cdn.jsdelivr.net/npm/bootswatch@5/dist/darkly/bootstrap.min.css');
+
+:root {
+  /* override Bootstrap background and text colors */
+  --bs-body-bg: #000000;
+  --bs-body-color: #FFFFFF;
+}
+
+body {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+}

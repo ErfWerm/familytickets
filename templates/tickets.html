@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block body %}
+  <!-- Search form -->
+  <form method="get" class="mb-3">
+    <input name="q" value="{{ q }}" placeholder="Search tickets..." class="form-control d-inline-block w-auto">
+    <button class="btn btn-outline-primary">Search</button>
+  </form>
+
+  <a href="{{ url_for('ticket_new') }}" class="btn btn-primary mb-3">+ New Ticket</a>
+  <ul class="list-group">
+    {% for t in tickets %}
+      <li class="list-group-item">
+        <div class="d-flex align-items-start">
+          <div class="me-3" style="width: 80px; height: 80px;">
+            {% if t.attachments and t.attachments[0] %}
+              <img src="{{ url_for('uploaded_file', filename=t.attachments[0].filename) }}" class="rounded" style="width:100%; height:100%; object-fit:cover;">
+            {% else %}
+              <div class="w-100 h-100 bg-light rounded d-flex align-items-center justify-content-center">
+                <small class="text-muted">No Image</small>
+              </div>
+            {% endif %}
+          </div>
+          <div class="flex-grow-1">
+            <a href="{{ url_for('ticket_view', tid=t.id) }}" class="h5 d-block mb-1">
+              #{{ t.ticket_number }} - {{ t.title }}
+            </a>
+            <div class="mb-1 text-muted">
+              Submitted by: {{ t.submitted_by }}
+            </div>
+            <p class="mb-1 text-muted">
+              {{ t.description }}
+            </p>
+            <small class="text-muted">
+              Created: {{ t.created_at.strftime('%Y-%m-%d %H:%M') }} |
+              Updated: {{ t.updated_at.strftime('%Y-%m-%d %H:%M') }} |
+              Finished: {% if t.finished_at %}{{ t.finished_at.strftime('%Y-%m-%d %H:%M') }}{% else %}—{% endif %}
+            </small>
+          </div>
+          <span class="badge bg-secondary ms-3">{{ t.status }}</span>
+        </div>
+      </li>
+    {% else %}
+      <li class="list-group-item">No tickets yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

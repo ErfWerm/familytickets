@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block body %}
+  <h2>#{{ ticket.ticket_number }} - {{ ticket.title }}</h2>
+  <p><strong>Submitted by:</strong> {{ ticket.submitted_by }}</p>
+  <p><strong>Status:</strong> {{ ticket.status }}</p>
+  {% if ticket.finished_at %}
+    <p><strong>Finished:</strong> {{ ticket.finished_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  {% endif %}
+  <p>{{ ticket.description }}</p>
+
+  <hr>
+  <h4>Attachments</h4>
+  <div class="d-flex flex-wrap mb-3">
+    {% for att in ticket.attachments %}
+      <div class="me-3 mb-3 text-center">
+        <a href="{{ url_for('uploaded_file', filename=att.filename) }}" target="_blank">
+          <img src="{{ url_for('uploaded_file', filename=att.filename) }}" class="rounded" style="width:120px; height:120px; object-fit:cover;">
+        </a>
+        <div class="mt-1 small text-muted">{{ att.filename }}</div>
+      </div>
+    {% else %}
+      <div class="text-muted">No attachments.</div>
+    {% endfor %}
+  </div>
+
+  <form method="post" action="{{ url_for('upload_attachment', tid=ticket.id) }}" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+      <label for="new-attachment" class="form-label">Add Attachment</label>
+      <input id="new-attachment" type="file" name="attachment" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+
+  <hr>
+  <h4>Comments</h4>
+  <ul class="list-group mb-3">
+    {% for c in ticket.comments %}
+      <li class="list-group-item">
+        <strong>{{ c.author }}</strong> ({{ c.created_at.strftime('%Y-%m-%d %H:%M') }}):<br>
+        {{ c.body }}
+      </li>
+    {% else %}
+      <li class="list-group-item">No comments.</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post" action="{{ url_for('ticket_comment', tid=ticket.id) }}">
+    <div class="mb-3">
+      <label for="comment-author" class="form-label">Your Name</label>
+      <input id="comment-author" name="author" type="text" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="comment-body" class="form-label">Comment</label>
+      <textarea id="comment-body" name="body" class="form-control" rows="2" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Comment</button>
+  </form>
+
+  <hr>
+  <form method="post" action="{{ url_for('ticket_status', tid=ticket.id) }}">
+    <label for="status-select" class="form-label">Change status:</label>
+    <select id="status-select" name="status" class="form-select d-inline-block w-auto me-2">
+      {% for s in ['Open','In Progress','Closed'] %}
+        <option value="{{ s }}" {% if ticket.status==s %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-secondary">Update</button>
+    <a href="{{ url_for('ticket_list') }}" class="btn btn-link">Back to list</a>
+  </form>
+{% endblock %}

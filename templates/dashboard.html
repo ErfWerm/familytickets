@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block body %}
+  <h2>Dashboard</h2>
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Tickets</h5>
+          <p class="card-text display-6">{{ total }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Open</h5>
+          <p class="card-text display-6">{{ open_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Closed</h5>
+          <p class="card-text display-6">{{ closed_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Avg. Resolution (days)</h5>
+          <p class="card-text display-6">{{ "{:.1f}".format(avg_time) if avg_time else '—' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="{{ url_for('ticket_list') }}" class="btn btn-secondary">Back to Tickets</a>
+{% endblock %}

@@ -1,0 +1,18 @@
+/* midnight-blue.css: overrides Bootstrap CSS variables */
+:root {
+  /* background and text colors */
+  --bs-body-bg: #000000;
+  --bs-body-color: #1E90FF;
+  /* link colors */
+  --bs-link-color: #1E90FF;
+  --bs-link-hover-color: #63B8FF;
+}
+
+/* Optional: adjust button and badge colors for contrast */
+.btn-primary {
+  --bs-btn-bg: #1E90FF;
+  --bs-btn-border-color: #1E90FF;
+}
+.badge {
+  background-color: #1E90FF;
+}

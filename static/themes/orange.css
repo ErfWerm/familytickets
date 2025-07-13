@@ -1,0 +1,13 @@
+/* orange.css: import core Bootstrap then override for orange theme */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+
+:root {
+  /* orange background & black text */
+  --bs-body-bg: #FFA500;
+  --bs-body-color: #000000;
+}
+
+body {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+}

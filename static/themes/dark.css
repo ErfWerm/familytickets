@@ -1,13 +1,22 @@
-/* dark.css: import Darkly theme then override for true black background */
+/* static/themes/dark.css */
 @import url('https://cdn.jsdelivr.net/npm/bootswatch@5/dist/darkly/bootstrap.min.css');
 
-:root {
-  /* override Bootstrap background and text colors */
-  --bs-body-bg: #000000;
-  --bs-body-color: #FFFFFF;
+body {
+  background-color: #000 !important;
+  color: #fff !important;
 }
 
-body {
-  background-color: var(--bs-body-bg) !important;
-  color: var(--bs-body-color) !important;
+/* Online/offline status dots */
+.status-dot {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+}
+.status-dot.online {
+  background-color: #2ecc71;
+}
+.status-dot.offline {
+  background-color: #e74c3c;
 }
